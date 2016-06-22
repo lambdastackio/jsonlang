@@ -1,0 +1,3 @@
+tests/testenv.libjsonlang
+examples/test_google.jsonlang
+examples/test_amazon.jsonlang

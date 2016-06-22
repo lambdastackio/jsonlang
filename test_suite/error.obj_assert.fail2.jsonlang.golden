@@ -1,0 +1,6 @@
+RUNTIME ERROR: foo was not equal to bar
+	error.obj_assert.fail2.jsonlang:20:32-64	thunk <object_assert>
+	std.jsonlang:981:54-57	thunk <a>
+	std.jsonlang:981:54-65	function <anonymous>
+	std.jsonlang:981:54-65	function <anonymous>
+	std.jsonlang:985:21-32	

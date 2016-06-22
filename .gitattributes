@@ -1,0 +1,17 @@
+* text=auto
+
+*.py text
+*.cpp text
+*.c text
+*.h text
+*.jsonlang text
+*.jinja text
+*.html text
+README text
+*.TEMPLATE text
+*.css text
+Makefile text
+
+# These tests are explicitly given specific line endings
+test_suite/unix_line_endings.jsonlang text eol=lf
+test_suite/dos_line_endings.jsonlang text eol=crlf

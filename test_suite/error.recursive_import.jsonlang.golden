@@ -1,0 +1,22 @@
+RUNTIME ERROR: Max stack frames exceeded.
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	...
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	
+	error.recursive_import.jsonlang:17:15-53	

@@ -1,0 +1,7 @@
+{
+    environments: import "../testenv.libjsonlang",
+
+    empty_service: {
+        environment: "google",
+    },
+}

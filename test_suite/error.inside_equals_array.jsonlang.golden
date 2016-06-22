@@ -1,0 +1,7 @@
+RUNTIME ERROR: foobar
+	error.inside_equals_array.jsonlang:18:18-31	thunk <array_element>
+	std.jsonlang:967:41-44	thunk <b>
+	std.jsonlang:967:33-44	function <anonymous>
+	std.jsonlang:967:33-44	function <aux>
+	std.jsonlang:970:29-44	function <anonymous>
+	std.jsonlang:971:21-32	
