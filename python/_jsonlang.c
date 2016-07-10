@@ -53,12 +53,12 @@ static struct JsonlangJsonValue *python_to_jsonlang_json(struct JsonlangVm *vm, 
         r = jsonlang_json_make_string(vm, PyString_AsString(str));
         Py_DECREF(str);
         return r;
+    } else if (PyBool_Check(v)) {
+        return jsonlang_json_make_bool(vm, PyObject_IsTrue(v));
     } else if (PyFloat_Check(v)) {
         return jsonlang_json_make_number(vm, PyFloat_AsDouble(v));
     } else if (PyInt_Check(v)) {
         return jsonlang_json_make_number(vm, (double)(PyInt_AsLong(v)));
-    } else if (PyBool_Check(v)) {
-        return jsonlang_json_make_bool(vm, PyObject_IsTrue(v));
     } else if (v == Py_None) {
         return jsonlang_json_make_null(vm);
     } else if (PySequence_Check(v)) {
@@ -108,7 +108,7 @@ static struct JsonlangJsonValue *python_to_jsonlang_json(struct JsonlangVm *vm, 
     }
 }
 
-/* This function is bound for every native callback, but with a different 
+/* This function is bound for every native callback, but with a different
  * context.
  */
 static struct JsonlangJsonValue *cpython_native_callback(
@@ -242,7 +242,7 @@ int handle_vars(struct JsonlangVm *vm, PyObject *map, int code, int tla)
 
     PyObject *key, *val;
     Py_ssize_t pos = 0;
-    
+
     while (PyDict_Next(map, &pos, &key, &val)) {
         const char *key_ = PyString_AsString(key);
         if (key_ == NULL) {
@@ -352,7 +352,7 @@ static int handle_native_callbacks(struct JsonlangVm *vm, PyObject *native_callb
     }
 
     *ctxs = malloc(sizeof(struct NativeCtx) * num_natives);
-    
+
     /* Re-use num_natives but just as a counter this time. */
     num_natives = 0;
     pos = 0;
@@ -502,4 +502,3 @@ PyMODINIT_FUNC init_jsonlang(void)
 {
     Py_InitModule3("_jsonlang", module_methods, "A Python interface to Jsonlang.");
 }
-
