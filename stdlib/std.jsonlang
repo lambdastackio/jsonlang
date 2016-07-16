@@ -1,4 +1,20 @@
 /*
+Copyright 2016 LambdaStack All rights reserved.
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+
+/*
 Copyright 2015 Google Inc. All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -53,6 +69,19 @@ limitations under the License.
 
     stringChars(str)::
         std.makeArray(std.length(str), function(i) str[i]),
+
+    parseInt(str)::
+       local addDigit(aggregate, digit) =
+           if digit < 0 || digit > 9 then
+               error("parseInt got string which does not match regex [0-9]+")
+           else
+               10 * aggregate + digit;
+       local toDigits(str) =
+           [std.codepoint(char) - std.codepoint("0") for char in std.stringChars(str)];
+       if str[0] == "-" then
+           -std.foldl(addDigit, toDigits(str[1:]), 0)
+       else
+           std.foldl(addDigit, toDigits(str), 0),
 
     split(str, c)::
         if std.type(str) != "string" then
@@ -534,7 +563,7 @@ limitations under the License.
                     local val =
                         if j2 < std.length(arr) then
                             arr[j2]
-                        else 
+                        else
                             error "Not enough values to format, got " + std.length(arr);
                     local s =
                         if code.ctype == "%" then
@@ -577,7 +606,7 @@ limitations under the License.
                             error "Cannot use * precision with object."
                         else
                             code.prec;
-                    local val = 
+                    local val =
                         if std.objectHasAll(obj, f) then
                             obj[f]
                         else
@@ -715,7 +744,7 @@ limitations under the License.
 
     manifestJson(value):: std.manifestJsonEx(value, "    "),
 
-    manifestJsonEx(value, indent):: 
+    manifestJsonEx(value, indent)::
         local aux(v, path, cindent) =
             if v == true then
                 "true"
@@ -734,7 +763,7 @@ limitations under the License.
                 local lines = ["[\n"]
                               + std.join([",\n"],
                                          [[cindent + indent + aux(v[i], path + [i], cindent + indent)] for i
-in range])                
+in range])
                               + ["\n" + cindent + "]"];
                 std.join("", lines)
             else if std.type(v) == "object" then
@@ -801,24 +830,24 @@ in range])
                     "==";
                 aux(arr, i + 3, r + str) tailstrict
             else if i + 2 >= std.length(arr) then
-                local str = 
-                    // 6 MSB of i 
+                local str =
+                    // 6 MSB of i
                     base64_table[(arr[i] & 252) >> 2] +
                     // 2 LSB of i, 4 MSB of i+1
                     base64_table[(arr[i] & 3) << 4 | (arr[i+1] & 240) >> 4] +
-                    // 4 LSB of i+1 
+                    // 4 LSB of i+1
                     base64_table[(arr[i+1] & 15) << 2] +
-                    "="; 
+                    "=";
                 aux(arr, i + 3, r + str) tailstrict
             else
-                local str = 
-                    // 6 MSB of i 
+                local str =
+                    // 6 MSB of i
                     base64_table[(arr[i] & 252) >> 2] +
                     // 2 LSB of i, 4 MSB of i+1
                     base64_table[(arr[i] & 3) << 4 | (arr[i+1] & 240) >> 4] +
                     // 4 LSB of i+1, 2 MSB of i+2
                     base64_table[(arr[i+1] & 15) << 2 | (arr[i+2] & 192) >> 6] +
-                    // 6 LSB of i+2 
+                    // 6 LSB of i+2
                     base64_table[(arr[i+2] & 63)];
                 aux(arr, i + 3, r + str) tailstrict;
 
@@ -836,12 +865,12 @@ in range])
             local aux(str, i, r) =
                 if i >= std.length(str) then
                     r
-                else 
-                    // all 6 bits of i, 2 MSB of i+1 
+                else
+                    // all 6 bits of i, 2 MSB of i+1
                     local n1 = [base64_inv[str[i]] << 2 | (base64_inv[str[i+1]] >> 4)];
                     // 4 LSB of i+1, 4MSB of i+2
                     local n2 =
-                        if str[i+2] == "=" then [] 
+                        if str[i+2] == "=" then []
                         else [(base64_inv[str[i+1]] & 15) << 4 | (base64_inv[str[i+2]] >> 2)];
                     // 2 LSB of i+2, all 6 bits of i+3
                     local n3 =

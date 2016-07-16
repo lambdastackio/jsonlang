@@ -1,1 +1,1 @@
-Please find the Vim filetype plugin in https://github.com/google/vim-jsonlang
+Please find the Vim filetype plugin in https://github.com/lambdastackio/vim-jsonlang
