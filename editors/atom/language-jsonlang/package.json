@@ -1,0 +1,10 @@
+{
+  "name": "language-jsonlang",
+  "version": "0.1.0",
+  "description": "Syntax highlighting for Jsonlang",
+  "repository": "https://github.com/lambdastackio/language-jsonlang",
+  "engines": {
+    "atom": "*",
+    "node": "*"
+  }
+}
