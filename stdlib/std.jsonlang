@@ -1020,4 +1020,26 @@ in range])
         local arr = std.split(f, "/");
         std.join("/", std.makeArray(std.length(arr)-1, function(i)arr[i]) + [r]),
 
+    // DSL Specifics...
+    // RHEL   - 0
+    // DEBIAN - 1
+    // DARWIN - 2
+    os()::
+        // Default to RHEL
+        0,
+
+    pip(pkg)::
+        "pip install %s" % pkg,
+
+    package(pkg)::
+        local breed = os();
+        // RHEL breed
+        if breed == 0 then
+            "yum install -y %s" % pkg,
+        else if breed == 1 then
+            // Debian breed
+            "apt-get install -y %s" % pkg,
+        else if breed == 2 then
+            "brew install %s" % pkg,
+            
 }

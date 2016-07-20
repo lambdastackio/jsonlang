@@ -718,7 +718,8 @@ class Interpreter {
         //    abs_file = dir + abs_file;
 
         // Cmd should be in $PATH
-        std::string cmd = (const char *)cmdLiteralString->value.c_str();
+        std::string cmd = encode_utf8(cmdLiteralString->value).c_str();
+
         std::string results = exec_cmd(cmd.c_str());
 
         // Now that we have the jsonlang result the simplest thing is to write to the
@@ -893,11 +894,50 @@ class Interpreter {
      */
     AST *import(const LocationRange &loc, const LiteralString *file)
     {
+        // lambda -b
+        //(const char *)cmdLiteralString->value.c_str()
+        int process;
+        const std::string *new_file;
+        std::string str = encode_utf8(file->value).c_str();
+
+        if (str.find(".json") != std::string::npos ||
+            str.find(".libjsonlang") != std::string::npos) {
+            process = 0; // Default of .jsonlang or .json file
+            // new_file - Not currently used..
+            new_file = new std::string(str);
+        }
+        else {
+            if (str.find("http") != std::string::npos)
+                process = 1;
+            else
+                process = 2;
+        }
+
+        // Make http(s) call and return json or jsonlang
+        if (process == 1) {
+            //std::cout << "http_import";
+            new_file = http_import(loc, str);
+        }
+
+        // Execute and return json or jsonlang
+        if (process == 2) {
+            //std::cout << "exec_import";
+            new_file = exec_import(loc, str);
+        }
+        // lambda -e
+
         const ImportCacheValue *input = importString(loc, file);
         Tokens tokens = jsonlang_lex(input->foundHere, input->content.c_str());
         AST *expr = jsonlang_parse(alloc, tokens);
         jsonlang_desugar(alloc, expr, nullptr);
         jsonlang_static_analysis(expr);
+
+        // lambda -b
+        if (process != 0) {
+            remove(new_file->c_str());
+        }
+        // lambda -e
+
         return expr;
     }
 

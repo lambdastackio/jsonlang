@@ -174,6 +174,7 @@ static const std::map<std::string, Token::Kind> keywords = {
     {"assert", Token::ASSERT},
     {"else", Token::ELSE},
     {"error", Token::ERROR},
+    {"exec", Token::EXEC},
     {"false", Token::FALSE},
     {"for", Token::FOR},
     {"function", Token::FUNCTION},

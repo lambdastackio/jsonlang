@@ -123,6 +123,7 @@ struct Token {
         ASSERT,
         ELSE,
         ERROR,
+        EXEC,
         FALSE,
         FOR,
         FUNCTION,
@@ -197,6 +198,7 @@ struct Token {
             case ASSERT: return "assert";
             case ELSE: return "else";
             case ERROR: return "error";
+            case EXEC: return "exec";
             case FALSE: return "false";
             case FOR: return "for";
             case FUNCTION: return "function";

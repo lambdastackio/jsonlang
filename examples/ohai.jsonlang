@@ -1,0 +1,13 @@
+{
+    // Make sure the file is executable (i.e., chmod +x)
+    //local testing = "test",
+    //ohai: [me]
+    //local test = import "ohai.jsonlang",
+
+    //local test = import "ohai",
+    local m = std.min(2,5),
+    std.pip("jinja2"),
+    //test: m,
+    //test3: test
+    //local test2 = import "ohai",
+}
