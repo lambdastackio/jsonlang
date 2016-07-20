@@ -535,6 +535,9 @@ class Desugarer {
         } else if (auto *ast = dynamic_cast<Error*>(ast_)) {
             desugar(ast->expr, obj_level);
 
+        } else if (dynamic_cast<const Exec*>(ast_)) {
+            // Nothing to do.
+
         } else if (auto *ast = dynamic_cast<Function*>(ast_)) {
             desugar(ast->body, obj_level);
             desugarParams(ast->params, obj_level);

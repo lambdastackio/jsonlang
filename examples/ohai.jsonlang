@@ -6,7 +6,7 @@
 
     //local test = import "ohai",
     local m = std.min(2,5),
-    std.pip("jinja2"),
+    local n = std.pip("jinja2"),
     //test: m,
     //test3: test
     //local test2 = import "ohai",

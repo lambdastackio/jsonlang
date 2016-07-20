@@ -260,6 +260,7 @@ TEST(Lexer, TestKeywords)
     testLex("assert", "assert", {Token(Token::Kind::ASSERT, "assert")}, "");
     testLex("else", "else", {Token(Token::Kind::ELSE, "else")}, "");
     testLex("error", "error", {Token(Token::Kind::ERROR, "error")}, "");
+    testLex("exec", "exec", {Token(Token::Kind::EXEC, "exec")}, "");
     testLex("false", "false", {Token(Token::Kind::FALSE, "false")}, "");
     testLex("for", "for", {Token(Token::Kind::FOR, "for")}, "");
     testLex("function", "function", {Token(Token::Kind::FUNCTION, "function")}, "");

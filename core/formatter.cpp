@@ -366,6 +366,10 @@ class Unparser {
             o << "error";
             unparse(ast->expr, true);
 
+        } else if (auto *ast = dynamic_cast<const Error*>(ast_)) {
+            o << "exec";
+            unparse(ast->expr, true);
+
         } else if (auto *ast = dynamic_cast<const Function*>(ast_)) {
             o << "function";
             unparseParams(ast->parenLeftFodder, ast->params, ast->trailingComma,
@@ -425,7 +429,7 @@ class Unparser {
                 if (bind.functionSugar) {
                     unparseParams(bind.parenLeftFodder, bind.params, bind.trailingComma,
                                   bind.parenRightFodder);
-                } 
+                }
                 fill(bind.opFodder, true, true);
                 o << "=";
                 unparse(bind.body, true);
@@ -833,7 +837,7 @@ class Pass {
             fodder(bind.varFodder);
             if (bind.functionSugar) {
                 params(bind.parenLeftFodder, bind.params, bind.parenRightFodder);
-            } 
+            }
             fodder(bind.opFodder);
             expr(bind.body);
             fodder(bind.closeFodder);
@@ -1670,7 +1674,7 @@ class FixIndentation {
             Indent new_indent = strong_indent
                                 ? newIndentStrong(first_fodder, indent, new_column)
                                 : newIndent(first_fodder, indent, new_column);
-                
+
             first = true;
             for (auto &element : ast->elements) {
                 if (!first) column++;
@@ -1798,7 +1802,7 @@ class FixIndentation {
                 if (bind.functionSugar) {
                     params(bind.parenLeftFodder, bind.params, bind.trailingComma,
                            bind.parenRightFodder, new_indent);
-                } 
+                }
                 fill(bind.opFodder, true, true, new_indent.lineUp);
                 column++;  // '='
                 Indent new_indent2 = newIndent(open_fodder(bind.body), new_indent, column + 1);
